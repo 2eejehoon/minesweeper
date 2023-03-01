@@ -2,7 +2,7 @@ import { CODE } from "./constant";
 
 export default function plantMine(row: number, col: number, mine: number) {
   // row * col 길이의 배열을 생성합니다.
-  const candidate = Array<number>(row * col)
+  const candidate = Array(row * col)
     .fill(0)
     .map((_, i) => {
       return Number(i);
