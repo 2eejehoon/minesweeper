@@ -1,6 +1,6 @@
 import useInput from "../../hooks/useInput";
 import { useAppDispatch } from "../../store";
-import { setGame } from "../../store/mineSlice";
+import { setTable } from "../../store/mineSlice";
 import { useCallback } from "react";
 import Input from "../Input/Input";
 import {
@@ -12,15 +12,16 @@ import {
 import Button from "../Button/Button";
 
 export default function Setting() {
-  const [col, handleColChange] = useInput(10);
   const [row, handleRowChange] = useInput(10);
+  const [col, handleColChange] = useInput(10);
   const [mine, handleMineChange] = useInput(10);
 
   const dispatch = useAppDispatch();
 
-  const handleStart = useCallback(() => {
-    dispatch(setGame({ col, row, mine }));
-  }, [row, col, mine]);
+  const handleStart = useCallback(
+    () => dispatch(setTable({ row, col, mine })),
+    [row, col, mine]
+  );
 
   return (
     <Wrapper>
@@ -29,31 +30,34 @@ export default function Setting() {
       </TimerContainer>
       <InputContainer>
         <Input
-          id="가로"
-          text="가로"
+          id="행"
+          text="행"
           type="number"
-          value={col}
-          onChange={handleColChange}
-        />
-        <Input
-          id="세로"
-          text="세로"
-          type="number"
+          min={1}
           value={row}
           onChange={handleRowChange}
+        />
+        <Input
+          id="열"
+          text="열"
+          type="number"
+          min={1}
+          value={col}
+          onChange={handleColChange}
         />
         <Input
           id="지뢰"
           text="지뢰"
           type="number"
-          max={col * row}
+          min={1}
+          max={row * col}
           value={mine}
           onChange={handleMineChange}
         />
       </InputContainer>
       <ButtonContainer>
         <Button type="button" onClick={handleStart}>
-          시작
+          업데이트
         </Button>
       </ButtonContainer>
     </Wrapper>

@@ -1,17 +1,7 @@
 import { ReactComponent as Bomb } from "../../src/assets/bomb.svg";
 import { ReactComponent as Flag } from "../../src/assets/flag.svg";
 import { ReactComponent as Question } from "../../src/assets/question.svg";
-
-export const CODE = {
-  UNOPENED: -1, // 열리지 않은 cell
-  QUESTION: -2, // 물음표src/
-  FLAG: -3, // 깃발
-  QUESTION_MINE: -4, // 지뢰가 심어진 cell에 물음표
-  FLAG_MINE: -5, // 지뢰가 심어진 cell에 깃발
-  CLICKED_MINE: -6, // 지뢰가 심어진 cell을 클릭
-  MINE: -7, // 지뢰가 심어져 있는 cell
-  OPENED: 0, // 열린 cell
-} as const;
+import { CODE } from "./contant";
 
 export function plantMine(row: number, col: number, mine: number): number[][] {
   // row * col 길이의 배열을 생성합니다.
@@ -45,44 +35,49 @@ export function plantMine(row: number, col: number, mine: number): number[][] {
   for (let k = 0; k < shuffle.length; k++) {
     const ver = Math.floor(shuffle[k] / col);
     const hor = shuffle[k] % col;
-    data[ver][hor] = CODE.MINE;
+    data[ver][hor] = CODE.UNOPENED_MINE;
   }
 
   return data;
 }
 
-export function text(code: number) {
+export function getText(code: number) {
   switch (code) {
     case CODE.UNOPENED:
-    case CODE.MINE:
+    case CODE.UNOPENED_MINE:
       return "";
-    case CODE.QUESTION:
-    case CODE.QUESTION_MINE:
-      return <Question width={20} height={20} />;
-    case CODE.FLAG:
-    case CODE.FLAG_MINE:
-      return <Flag width={20} height={20} />;
+    case CODE.OPENED_MINE:
     case CODE.CLICKED_MINE:
       return <Bomb width={20} height={20} />;
+    case CODE.FLAG:
+    case CODE.FLAG_MINE:
+      return <Flag width={25} height={26} />;
+    case CODE.QUESTION:
+    case CODE.QUESTION_MINE:
+      return <Question width={20} height={18} />;
     case CODE.OPENED:
-      return 1;
+      return "";
     default:
       return code;
   }
 }
 
-export function style(code: number) {
+export function getStyle(code: number) {
   switch (code) {
     case CODE.UNOPENED:
-    case CODE.QUESTION:
     case CODE.FLAG:
-    case CODE.MINE:
-    case CODE.QUESTION_MINE:
+    case CODE.QUESTION:
     case CODE.FLAG_MINE:
-    default:
+    case CODE.QUESTION_MINE:
+    case CODE.UNOPENED_MINE:
       return "lightgrey";
     case CODE.OPENED:
-    case CODE.CLICKED_MINE:
+      return "darkgray";
+    case CODE.OPENED_MINE:
       return "pink";
+    case CODE.CLICKED_MINE:
+      return "red";
+    default:
+      return "lightgrey";
   }
 }

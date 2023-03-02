@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledTd = styled.td`
+export const StyledCell = styled.td`
   padding: 0;
 `;
 

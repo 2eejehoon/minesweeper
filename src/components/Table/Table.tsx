@@ -1,17 +1,22 @@
+import { memo } from "react";
 import { useAppSelector } from "../../store";
-import Tr from "../Tr/Tr";
+import TableRow from "../TableRow/TableRow";
 import { StyledTable } from "./TableStyle";
 
-export default function Table() {
-  const data = useAppSelector((state) => state.mine.data);
+function Table() {
+  const data = useAppSelector((state) => state.mine.table);
 
   return (
     <StyledTable>
-      {Array(data.length)
-        .fill(0)
-        .map((_, i) => (
-          <Tr row={Number(i)} />
-        ))}
+      <tbody>
+        {Array(data.length)
+          .fill(0)
+          .map((_, i) => (
+            <TableRow row={Number(i)} />
+          ))}
+      </tbody>
     </StyledTable>
   );
 }
+
+export default memo(Table);

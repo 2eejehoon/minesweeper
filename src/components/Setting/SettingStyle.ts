@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const InputContainer = styled.div`
-  flex: 2;
   height: 100%;
   padding: 5px;
   display: flex;
@@ -10,7 +9,6 @@ export const InputContainer = styled.div`
 `;
 
 export const TimerContainer = styled.div`
-  flex: 2;
   height: 100%;
   padding: 5px;
   display: flex;
@@ -19,7 +17,6 @@ export const TimerContainer = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  flex: 1;
   height: 100%;
   padding: 5px;
   display: flex;
@@ -30,6 +27,6 @@ export const ButtonContainer = styled.div`
 export const Wrapper = styled.div`
   height: 50px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: center;
 `;
