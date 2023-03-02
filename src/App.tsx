@@ -1,9 +1,11 @@
-import Setting from "./components/Setting";
-import Table from "./components/Table";
+import Setting from "./components/Setting/Setting";
+import Table from "./components/Table/Table";
+import GlobalStyle from "./GlobalStyle";
 
 function App() {
   return (
     <>
+      <GlobalStyle />
       <Setting />
       <Table />
     </>

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import plantMine from "../utils/plantMine";
+import { plantMine } from "../utils/mine";
 
 export interface mineState {
   data: number[][];
@@ -16,11 +16,11 @@ export const mineSlice = createSlice({
   reducers: {
     setGame(
       state,
-      action: PayloadAction<{ row: number; col: number; mine: number }>
+      action: PayloadAction<{ col: number; row: number; mine: number }>
     ) {
       state.data = plantMine(
-        action.payload.row,
         action.payload.col,
+        action.payload.row,
         action.payload.mine
       );
     },
