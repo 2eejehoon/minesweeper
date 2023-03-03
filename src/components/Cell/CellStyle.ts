@@ -1,10 +1,18 @@
 import styled from "styled-components";
 
+interface CellButtonProps {
+  bgColor: string;
+  color: string;
+}
+
 export const StyledCell = styled.td`
   padding: 0;
 `;
 
-export const StyledButton = styled.button<{ color: string }>`
+export const StyledButton = styled.button<CellButtonProps>`
+  color: ${(props) => props.color};
+  font-size: 14px;
+  font-weight: 600;
   height: 30px;
   width: 30px;
   display: flex;
@@ -12,8 +20,8 @@ export const StyledButton = styled.button<{ color: string }>`
   padding: 0;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.color};
-  border: 1px solid black;
+  background-color: ${(props) => props.bgColor};
+  border: 1px solid white;
   &:hover,
   :active :focus {
     opacity: 70%;

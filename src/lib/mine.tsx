@@ -1,7 +1,7 @@
 import { ReactComponent as Bomb } from "../../src/assets/bomb.svg";
 import { ReactComponent as Flag } from "../../src/assets/flag.svg";
 import { ReactComponent as Question } from "../../src/assets/question.svg";
-import { CODE } from "../contant";
+import { BG_COLOR, CODE, COLOR } from "../contant";
 
 export function plantMine(row: number, col: number, mine: number): number[][] {
   // 열리지 않은 상태를 가진 cell의 2차원 배열을 생성합니다.
@@ -56,17 +56,15 @@ export function openArounCell(
   ];
 
   function countMine(row: number, col: number): number {
-    // 지뢰 카운트
     let count = 0;
     for (let i = 0; i < 8; i++) {
       const ver = row + around[i][0];
       const hor = col + around[i][1];
 
-      // table 범위 밖인 경우 continue
       if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length)
         continue;
-      // code가 -4 이하인 경우 지뢰가 있는 cell
-      else if (table[ver][hor] <= -4) {
+
+      if (table[ver][hor] <= -4) {
         count++;
       }
     }
@@ -119,7 +117,7 @@ export function getText(code: number) {
 }
 
 export function getStyle(code: number) {
-  if (code > 0) return "darkgray";
+  if (code > 0) return BG_COLOR.OPENED;
 
   switch (code) {
     case CODE.UNOPENED:
@@ -128,14 +126,37 @@ export function getStyle(code: number) {
     case CODE.FLAG_MINE:
     case CODE.QUESTION_MINE:
     case CODE.UNOPENED_MINE:
-      return "lightgrey";
+      return BG_COLOR.UNOPENED;
     case CODE.OPENED:
-      return "darkgray";
+      return BG_COLOR.OPENED;
     case CODE.OPENED_MINE:
-      return "pink";
+      return BG_COLOR.BOOM;
     case CODE.CLICKED_MINE:
-      return "red";
+      return BG_COLOR.CLICKED;
     default:
-      return "lightgrey";
+      return BG_COLOR.UNOPENED;
+  }
+}
+
+export function getColor(code: number) {
+  switch (code) {
+    case 1:
+      return COLOR.ONE;
+    case 2:
+      return COLOR.TWO;
+    case 3:
+      return COLOR.THREE;
+    case 4:
+      return COLOR.FOUR;
+    case 5:
+      return COLOR.FIVE;
+    case 6:
+      return COLOR.SIX;
+    case 7:
+      return COLOR.SEVEN;
+    case 8:
+      return COLOR.EIGHT;
+    default:
+      return COLOR.DEFAULT;
   }
 }

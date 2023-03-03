@@ -1,18 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { openArounCell, plantMine } from "../lib/mine";
-import { CODE } from "../contant";
+import { CODE, STATUS } from "../contant";
 
 export interface mineState {
   table: number[][];
   time: number;
-  playing: false;
+  status: "WIN" | "LOSE" | "PLAY" | "STOP";
+  mineLeft: number;
 }
 
 const initialState: mineState = {
   table: plantMine(10, 10, 10),
   time: 0,
-  playing: false,
+  status: STATUS.STOP,
+  mineLeft: 10,
 };
 
 export const mineSlice = createSlice({
@@ -45,6 +47,7 @@ export const mineSlice = createSlice({
       // 마지막으로 클릭한 지뢰
       const { row, col } = action.payload;
       state.table[row][col] = CODE.CLICKED_MINE;
+      state.status = "LOSE";
     },
     updateCell(
       state,

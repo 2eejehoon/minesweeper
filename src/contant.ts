@@ -9,3 +9,29 @@ export const CODE = {
   OPENED_MINE: -7, // 열려 있음, 지뢰 O
   CLICKED_MINE: -8, // 클릭한 지뢰
 } as const;
+
+export const STATUS = {
+  WIN: "WIN",
+  LOSE: "LOSE",
+  PLAY: "PLAY",
+  STOP: "STOP",
+} as const;
+
+export const BG_COLOR = {
+  OPENED: "tomato",
+  UNOPENED: "gray",
+  BOOM: "pink",
+  CLICKED: "red",
+} as const;
+
+export const COLOR = {
+  ONE: "blue",
+  TWO: "green",
+  THREE: "red",
+  FOUR: "navy",
+  FIVE: "brown",
+  SIX: "pink",
+  SEVEN: "yellow",
+  EIGHT: "skyblue",
+  DEFAULT: "black",
+} as const;

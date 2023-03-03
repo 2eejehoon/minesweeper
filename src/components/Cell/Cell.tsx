@@ -1,7 +1,7 @@
 import { useAppSelector, useAppDispatch } from "../../store/index";
 import { StyledCell, StyledButton } from "./CellStyle";
-import { getStyle, getText } from "../../lib/mine";
-import { memo, MouseEvent, useCallback } from "react";
+import { getColor, getStyle, getText } from "../../lib/mine";
+import { memo, useMemo, MouseEvent, useCallback } from "react";
 import { CODE } from "../../contant";
 import { openCell, endGame, updateCell } from "../../store/mineSlice";
 
@@ -12,8 +12,8 @@ type CellProps = {
 
 function Cell({ row, col }: CellProps) {
   const dispatch = useAppDispatch();
-  const table = useAppSelector((state) => state.mine.table);
-  const code = table[row][col];
+  const { table } = useAppSelector((state) => state.mine);
+  const code = useMemo(() => table[row][col], [table, row, col]);
 
   const handleLeftClick = useCallback((code: number) => {
     if (code === CODE.UNOPENED) dispatch(openCell({ row, col })); // 닫힘, 지뢰 X -> cell 열기
@@ -31,7 +31,8 @@ function Cell({ row, col }: CellProps) {
   return (
     <StyledCell>
       <StyledButton
-        color={getStyle(code)}
+        bgColor={getStyle(code)}
+        color={getColor(code)}
         onClick={() => handleLeftClick(code)}
         onContextMenu={(e) => handleRightClick(e, code)}
       >
