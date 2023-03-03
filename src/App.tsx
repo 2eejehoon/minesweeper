@@ -1,4 +1,5 @@
 import Setting from "./components/Setting/Setting";
+import Display from "./components/common/Display/Display";
 import Table from "./components/Table/Table";
 import GlobalStyle from "./GlobalStyle";
 
@@ -7,6 +8,7 @@ function App() {
     <>
       <GlobalStyle />
       <Setting />
+      <Display />
       <Table />
     </>
   );

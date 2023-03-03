@@ -6,17 +6,19 @@ import { CODE, STATUS } from "../contant";
 export interface mineState {
   table: number[][];
   status: "WIN" | "LOSE" | "PLAY" | "READY";
-  time: number;
   mine: number;
   flag: number;
+  time: number;
+  currentTable: { row: number; col: number; mine: number };
 }
 
 const initialState: mineState = {
-  table: plantMine(10, 10, 10),
+  table: plantMine(8, 8, 16),
   status: STATUS.READY,
   time: 0,
-  mine: 10,
+  mine: 16,
   flag: 0,
+  currentTable: { row: 8, col: 8, mine: 16 },
 };
 
 export const mineSlice = createSlice({
@@ -28,11 +30,13 @@ export const mineSlice = createSlice({
       action: PayloadAction<{ row: number; col: number; mine: number }>
     ) {
       const { row, col, mine } = action.payload;
+      console.log(row, col, mine);
       state.table = plantMine(row, col, mine);
       state.status = STATUS.READY;
-      state.time = 0;
       state.mine = mine;
       state.flag = 0;
+      state.time = 0;
+      state.currentTable = { row, col, mine };
     },
 
     openCell(state, action: PayloadAction<{ row: number; col: number }>) {

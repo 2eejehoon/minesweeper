@@ -1,16 +1,16 @@
 import { useAppSelector, useAppDispatch } from "../../store/index";
-import { StyledCell, StyledButton } from "./CellStyle";
+import { StyledCell, StyledButton } from "./TableCellStyle";
 import { getColor, getBgColor, getText } from "../../lib/mine";
 import { memo, useMemo, MouseEvent, useCallback } from "react";
 import { CODE } from "../../contant";
 import { openCell, endGame, updateCell } from "../../store/mineSlice";
 
-type CellProps = {
+type TableCellProps = {
   row: number;
   col: number;
 };
 
-function Cell({ row, col }: CellProps) {
+function TableCell({ row, col }: TableCellProps) {
   const dispatch = useAppDispatch();
   const { table } = useAppSelector((state) => state.mine);
   const code = useMemo(() => table[row][col], [table, row, col]);
@@ -42,4 +42,4 @@ function Cell({ row, col }: CellProps) {
   );
 }
 
-export default memo(Cell);
+export default memo(TableCell);

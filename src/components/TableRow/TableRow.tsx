@@ -1,4 +1,4 @@
-import Cell from "../Cell/Cell";
+import Cell from "../TableCell/TableCell";
 import { memo } from "react";
 import { useAppSelector } from "../../store/index";
 import { StyledTableRow } from "./TableRowStyle";

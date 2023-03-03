@@ -58,13 +58,16 @@ export function openAroundCell(
 
   function countMine(row: number, col: number): number {
     let count = 0;
+    // cell 주변 8개 cell을 탐색
     for (let i = 0; i < 8; i++) {
       const ver = row + around[i][0];
       const hor = col + around[i][1];
 
+      // table 범위를 벗어난 경우 continue
       if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length)
         continue;
 
+      // 지뢰 cell인 경우 count++
       if (table[ver][hor] <= -4) {
         count++;
       }
@@ -73,20 +76,25 @@ export function openAroundCell(
   }
 
   function DFS(row: number, col: number) {
+    // 닫힌 cell이 아닌 경우 return
     if (table[row][col] !== CODE.UNOPENED) {
       return;
     }
 
+    // 닫힌 cell을 열고 주변 지뢰 갯수를 입력
     table[row][col] = countMine(row, col);
 
+    // 주변 지뢰의 수가 0인 경우에만 주변 cell 탐색
     if (table[row][col] === CODE.OPENED) {
       for (let i = 0; i < 8; i++) {
         const ver = row + around[i][0];
         const hor = col + around[i][1];
 
+        // table 범위를 벗어나면 continue
         if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length)
           continue;
 
+        // 탐색
         DFS(ver, hor);
       }
     }
@@ -95,6 +103,7 @@ export function openAroundCell(
   DFS(row, col);
 }
 
+// cell의 code 별로 보여주는 값을 받아오는 함수
 export function getText(code: number) {
   if (code > 0) return code;
 
@@ -124,6 +133,7 @@ export function getText(code: number) {
   }
 }
 
+// 배경색을 받아오는 함수
 export function getBgColor(code: number) {
   if (code > 0) return BG_COLOR.OPENED;
 
@@ -151,6 +161,7 @@ export function getBgColor(code: number) {
   }
 }
 
+// 숫자의 색상을 받아오는 함수
 export function getColor(code: number) {
   switch (code) {
     case 1:
