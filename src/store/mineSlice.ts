@@ -1,14 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { plantMine } from "../utils/mine";
-import { CODE } from "../utils/contant";
+import { openArounCell, plantMine } from "../lib/mine";
+import { CODE } from "../contant";
 
 export interface mineState {
   table: number[][];
+  time: number;
+  playing: false;
 }
 
 const initialState: mineState = {
   table: plantMine(10, 10, 10),
+  time: 0,
+  playing: false,
 };
 
 export const mineSlice = createSlice({
@@ -26,18 +30,8 @@ export const mineSlice = createSlice({
       );
     },
     openCell(state, action: PayloadAction<{ row: number; col: number }>) {
-      console.log(action.payload.row, action.payload.col);
-      // function DFS(row: number, col: number): void {
-      //   if (
-      //     row < 0 ||
-      //     col < 0 ||
-      //     row >= state.table.length ||
-      //     col >= state.table[0].length
-      //   ) {
-      //     return console.log("범위 밖");
-      //   }
-      // }
-      // DFS(action.payload.row, action.payload.col);
+      const { row, col } = action.payload;
+      openArounCell(row, col, state.table);
     },
     endGame(state, action: PayloadAction<{ row: number; col: number }>) {
       // 모든 cell을 확인하면서 닫힌 지뢰 -> 열린 지뢰
@@ -70,7 +64,7 @@ export const mineSlice = createSlice({
         case CODE.QUESTION:
           state.table[row][col] = CODE.UNOPENED;
           return;
-        // 깃발, 지뢰 O -> 물음표, 지뢰 X
+        // 깃발, 지뢰 O -> 물음표, 지뢰 O
         case CODE.FLAG_MINE:
           state.table[row][col] = CODE.QUESTION_MINE;
           return;

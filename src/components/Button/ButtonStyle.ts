@@ -12,4 +12,8 @@ export const StyledButton = styled.button`
   color: white;
   font-size: 14px;
   font-weight: 600;
+  &:hover,
+  :active {
+    opacity: 70%;
+  }
 `;
