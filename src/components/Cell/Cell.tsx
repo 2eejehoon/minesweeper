@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from "../../store/index";
 import { StyledCell, StyledButton } from "./CellStyle";
-import { getColor, getStyle, getText } from "../../lib/mine";
+import { getColor, getBgColor, getText } from "../../lib/mine";
 import { memo, useMemo, MouseEvent, useCallback } from "react";
 import { CODE } from "../../contant";
 import { openCell, endGame, updateCell } from "../../store/mineSlice";
@@ -31,7 +31,7 @@ function Cell({ row, col }: CellProps) {
   return (
     <StyledCell>
       <StyledButton
-        bgColor={getStyle(code)}
+        bgColor={getBgColor(code)}
         color={getColor(code)}
         onClick={() => handleLeftClick(code)}
         onContextMenu={(e) => handleRightClick(e, code)}

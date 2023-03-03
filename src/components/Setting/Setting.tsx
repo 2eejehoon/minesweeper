@@ -3,12 +3,7 @@ import { useAppDispatch } from "../../store";
 import { setTable } from "../../store/mineSlice";
 import { useCallback } from "react";
 import Input from "../Input/Input";
-import {
-  Wrapper,
-  TimerContainer,
-  InputContainer,
-  ButtonContainer,
-} from "./SettingStyle";
+import { Wrapper, InputContainer, ButtonContainer } from "./SettingStyle";
 import Button from "../Button/Button";
 
 export default function Setting() {
@@ -25,9 +20,6 @@ export default function Setting() {
 
   return (
     <Wrapper>
-      <TimerContainer>
-        <div></div>
-      </TimerContainer>
       <InputContainer>
         <Input
           id="행"

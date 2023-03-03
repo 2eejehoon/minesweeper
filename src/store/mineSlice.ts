@@ -1,20 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { openArounCell, plantMine } from "../lib/mine";
+import { openAroundCell, plantMine } from "../lib/mine";
 import { CODE, STATUS } from "../contant";
 
 export interface mineState {
   table: number[][];
+  status: "WIN" | "LOSE" | "PLAY" | "READY";
   time: number;
-  status: "WIN" | "LOSE" | "PLAY" | "STOP";
-  mineLeft: number;
+  mine: number;
+  flag: number;
 }
 
 const initialState: mineState = {
   table: plantMine(10, 10, 10),
+  status: STATUS.READY,
   time: 0,
-  status: STATUS.STOP,
-  mineLeft: 10,
+  mine: 10,
+  flag: 0,
 };
 
 export const mineSlice = createSlice({
@@ -25,60 +27,68 @@ export const mineSlice = createSlice({
       state,
       action: PayloadAction<{ row: number; col: number; mine: number }>
     ) {
-      state.table = plantMine(
-        action.payload.row,
-        action.payload.col,
-        action.payload.mine
-      );
+      const { row, col, mine } = action.payload;
+      state.table = plantMine(row, col, mine);
+      state.status = STATUS.READY;
+      state.time = 0;
+      state.mine = mine;
+      state.flag = 0;
     },
+
     openCell(state, action: PayloadAction<{ row: number; col: number }>) {
       const { row, col } = action.payload;
-      openArounCell(row, col, state.table);
+      openAroundCell(row, col, state.table);
     },
+
     endGame(state, action: PayloadAction<{ row: number; col: number }>) {
-      // 모든 cell을 확인하면서 닫힌 지뢰 -> 열린 지뢰
-      for (let row = 0; row < state.table.length; row++) {
-        for (let col = 0; col < state.table[0].length; col++) {
-          if (state.table[row][col] === CODE.UNOPENED_MINE) {
-            state.table[row][col] = CODE.OPENED_MINE;
+      const { row, col } = action.payload;
+
+      for (let i = 0; i < state.table.length; i++) {
+        for (let j = 0; j < state.table[0].length; j++) {
+          if (state.table[i][j] === CODE.UNOPENED_MINE) {
+            state.table[i][j] = CODE.OPENED_MINE; // 모든 cell을 확인하면서 닫힌 지뢰 -> 열린 지뢰
+          }
+          if (state.table[i][j] === CODE.FLAG_MINE) {
+            state.table[i][j] = CODE.REMOVED_MINE;
           }
         }
       }
-      // 마지막으로 클릭한 지뢰
-      const { row, col } = action.payload;
-      state.table[row][col] = CODE.CLICKED_MINE;
-      state.status = "LOSE";
+
+      state.table[row][col] = CODE.CLICKED_MINE; // 닫힌 지뢰 -> 클릭한 지뢰
+      state.status = STATUS.LOSE;
     },
+
     updateCell(
       state,
       action: PayloadAction<{ row: number; col: number; code: number }>
     ) {
       const { row, col, code } = action.payload;
+
       switch (code) {
-        // 닫힘, 지뢰 X -> 깃발, 지뢰 X
-        case CODE.UNOPENED:
+        case CODE.UNOPENED: // 닫힘, 지뢰 X -> 깃발, 지뢰 X
           state.table[row][col] = CODE.FLAG;
           return;
-        // 깃발, 지뢰 X -> 물음표, 지뢰 X
-        case CODE.FLAG:
+
+        case CODE.FLAG: // 깃발, 지뢰 X -> 물음표, 지뢰 X
           state.table[row][col] = CODE.QUESTION;
           return;
-        // 물음표, 지뢰 X -> 닫힘, 지뢰 X
-        case CODE.QUESTION:
+
+        case CODE.QUESTION: // 물음표, 지뢰 X -> 닫힘, 지뢰 X
           state.table[row][col] = CODE.UNOPENED;
           return;
-        // 깃발, 지뢰 O -> 물음표, 지뢰 O
-        case CODE.FLAG_MINE:
+
+        case CODE.FLAG_MINE: // 깃발, 지뢰 O -> 물음표, 지뢰 O
           state.table[row][col] = CODE.QUESTION_MINE;
           return;
-        // 물음표, 지뢰 O -> 닫힘, 지뢰 O
-        case CODE.QUESTION_MINE:
+
+        case CODE.QUESTION_MINE: // 물음표, 지뢰 O -> 닫힘, 지뢰 O
           state.table[row][col] = CODE.UNOPENED_MINE;
           return;
-        // 닫힘, 지뢰 O -> 깃발, 지뢰 O
-        case CODE.UNOPENED_MINE:
+
+        case CODE.UNOPENED_MINE: // 닫힘, 지뢰 O -> 깃발, 지뢰 O
           state.table[row][col] = CODE.FLAG_MINE;
           return;
+
         default:
           break;
       }

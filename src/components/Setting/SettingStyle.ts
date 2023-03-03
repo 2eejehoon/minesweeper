@@ -8,14 +8,6 @@ export const InputContainer = styled.div`
   justify-content: center;
 `;
 
-export const TimerContainer = styled.div`
-  height: 100%;
-  padding: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const ButtonContainer = styled.div`
   height: 100%;
   padding: 5px;
@@ -27,6 +19,6 @@ export const ButtonContainer = styled.div`
 export const Wrapper = styled.div`
   height: 50px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 `;

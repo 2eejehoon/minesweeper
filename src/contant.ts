@@ -8,19 +8,20 @@ export const CODE = {
   QUESTION_MINE: -6, // 물음표, 지뢰 O
   OPENED_MINE: -7, // 열려 있음, 지뢰 O
   CLICKED_MINE: -8, // 클릭한 지뢰
+  REMOVED_MINE: -9, // 제거한 지뢰
 } as const;
 
 export const STATUS = {
   WIN: "WIN",
   LOSE: "LOSE",
   PLAY: "PLAY",
-  STOP: "STOP",
+  READY: "READY",
 } as const;
 
 export const BG_COLOR = {
   OPENED: "tomato",
   UNOPENED: "gray",
-  BOOM: "pink",
+  MINE: "pink",
   CLICKED: "red",
 } as const;
 

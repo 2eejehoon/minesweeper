@@ -1,6 +1,7 @@
 import { ReactComponent as Bomb } from "../../src/assets/bomb.svg";
 import { ReactComponent as Flag } from "../../src/assets/flag.svg";
 import { ReactComponent as Question } from "../../src/assets/question.svg";
+import { ReactComponent as Removed } from "../../src/assets/removed.svg";
 import { BG_COLOR, CODE, COLOR } from "../contant";
 
 export function plantMine(row: number, col: number, mine: number): number[][] {
@@ -39,7 +40,7 @@ export function plantMine(row: number, col: number, mine: number): number[][] {
   return table;
 }
 
-export function openArounCell(
+export function openAroundCell(
   row: number,
   col: number,
   table: number[][]
@@ -102,21 +103,28 @@ export function getText(code: number) {
     case CODE.UNOPENED:
     case CODE.UNOPENED_MINE:
       return "";
+
     case CODE.OPENED_MINE:
     case CODE.CLICKED_MINE:
       return <Bomb width={20} height={20} />;
+
     case CODE.FLAG:
     case CODE.FLAG_MINE:
       return <Flag width={25} height={26} />;
+
     case CODE.QUESTION:
     case CODE.QUESTION_MINE:
       return <Question width={20} height={18} />;
+
+    case CODE.REMOVED_MINE:
+      return <Removed width={16} height={16} />;
+
     default:
       return code;
   }
 }
 
-export function getStyle(code: number) {
+export function getBgColor(code: number) {
   if (code > 0) return BG_COLOR.OPENED;
 
   switch (code) {
@@ -127,12 +135,17 @@ export function getStyle(code: number) {
     case CODE.QUESTION_MINE:
     case CODE.UNOPENED_MINE:
       return BG_COLOR.UNOPENED;
+
     case CODE.OPENED:
       return BG_COLOR.OPENED;
+
     case CODE.OPENED_MINE:
-      return BG_COLOR.BOOM;
+    case CODE.REMOVED_MINE:
+      return BG_COLOR.MINE;
+
     case CODE.CLICKED_MINE:
       return BG_COLOR.CLICKED;
+
     default:
       return BG_COLOR.UNOPENED;
   }
@@ -142,20 +155,28 @@ export function getColor(code: number) {
   switch (code) {
     case 1:
       return COLOR.ONE;
+
     case 2:
       return COLOR.TWO;
+
     case 3:
       return COLOR.THREE;
+
     case 4:
       return COLOR.FOUR;
+
     case 5:
       return COLOR.FIVE;
+
     case 6:
       return COLOR.SIX;
+
     case 7:
       return COLOR.SEVEN;
+
     case 8:
       return COLOR.EIGHT;
+
     default:
       return COLOR.DEFAULT;
   }
