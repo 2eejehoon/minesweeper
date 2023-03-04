@@ -36,11 +36,11 @@ export const BG_COLOR = {
 export const COLOR = {
   ONE: "blue",
   TWO: "green",
-  THREE: "purple",
-  FOUR: "navy",
+  THREE: "skyblue",
+  FOUR: "yellow",
   FIVE: "brown",
   SIX: "pink",
-  SEVEN: "yellow",
-  EIGHT: "skyblue",
+  SEVEN: "navy",
+  EIGHT: "purple",
   DEFAULT: "black",
 } as const;

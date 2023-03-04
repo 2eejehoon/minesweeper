@@ -8,11 +8,11 @@ type TableRowProps = {
 };
 
 function TableRow({ row }: TableRowProps) {
-  const table = useAppSelector((state) => state.mine.table);
+  const width = useAppSelector((state) => state.mine.table[0].length);
 
   return (
     <StyledTableRow>
-      {Array(table[0].length)
+      {Array(width)
         .fill(0)
         .map((_, i) => (
           <Cell key={row + i} row={row} col={Number(i)} />

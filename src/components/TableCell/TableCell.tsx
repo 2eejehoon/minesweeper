@@ -1,7 +1,7 @@
 import { useAppSelector, useAppDispatch } from "../../store/index";
 import { StyledCell, StyledButton } from "./TableCellStyle";
 import { getColor, getBgColor, getText } from "../../lib/mine";
-import { memo, useMemo, MouseEvent, useCallback } from "react";
+import { memo, MouseEvent, useCallback } from "react";
 import { CODE, STATE } from "../../contant";
 import {
   firstClick,
@@ -17,8 +17,8 @@ type TableCellProps = {
 
 function TableCell({ row, col }: TableCellProps) {
   const dispatch = useAppDispatch();
-  const { table, state } = useAppSelector((state) => state.mine);
-  const code = useMemo(() => table[row][col], [table, row, col]); // cell의 코드가 변할 때만 함수들을 재정의
+  const state = useAppSelector((state) => state.mine.state);
+  const code = useAppSelector((state) => state.mine.table[row][col]);
 
   const handleLeftClick = useCallback(() => {
     if (state === STATE.WIN || state === STATE.LOSE) return; // 게임 승리 또는 패배 시 클릭 X

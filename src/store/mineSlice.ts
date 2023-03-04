@@ -108,6 +108,7 @@ export const mineSlice = createSlice({
 
         case CODE.UNOPENED_MINE: // 닫힘, 지뢰 O -> 깃발, 지뢰 O
           state.table[row][col] = CODE.FLAG_MINE;
+          state.currentGame.flag++;
           state.currentGame.mineLeft--;
           state.currentGame.cellLeft--;
           if (state.currentGame.mineLeft === 0) {
