@@ -126,7 +126,7 @@ export function getText(code: number) {
 
     case CODE.OPENED_MINE:
     case CODE.CLICKED_MINE:
-      return <Bomb width={20} height={20} />;
+      return <Bomb width={18} height={18} />;
 
     case CODE.FLAG:
     case CODE.FLAG_MINE:
@@ -134,7 +134,7 @@ export function getText(code: number) {
 
     case CODE.QUESTION:
     case CODE.QUESTION_MINE:
-      return <Question width={20} height={18} />;
+      return <Question width={20} height={16} />;
 
     case CODE.REMOVED_MINE:
       return <Removed width={16} height={16} />;

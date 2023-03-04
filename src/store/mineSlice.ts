@@ -8,7 +8,6 @@ export interface mineState {
   state: "WIN" | "LOSE" | "PLAY" | "READY";
   currentGame: {
     flag: number;
-    time: number;
     mineLeft: number;
     cellLeft: number;
   };
@@ -18,7 +17,7 @@ export interface mineState {
 const initialState: mineState = {
   table: createTable(8, 8),
   state: STATE.READY,
-  currentGame: { flag: 0, time: 0, mineLeft: 8, cellLeft: 64 },
+  currentGame: { flag: 0, mineLeft: 8, cellLeft: 64 },
   currentTable: { height: 8, width: 8, mine: 8 },
 };
 
@@ -35,7 +34,6 @@ export const mineSlice = createSlice({
       state.state = STATE.READY;
       state.currentGame = {
         flag: 0,
-        time: 0,
         mineLeft: mine,
         cellLeft: height * width,
       };
@@ -85,12 +83,6 @@ export const mineSlice = createSlice({
           state.table[row][col] = CODE.FLAG;
           state.currentGame.flag++;
           state.currentGame.cellLeft--;
-          if (
-            state.currentGame.cellLeft === 0 &&
-            state.currentGame.mineLeft > 0
-          ) {
-            state.state = STATE.LOSE;
-          }
           return;
 
         case CODE.FLAG: // 깃발, 지뢰 X -> 물음표, 지뢰 X
@@ -120,7 +112,6 @@ export const mineSlice = createSlice({
           state.currentGame.cellLeft--;
           if (state.currentGame.mineLeft === 0) {
             state.state = STATE.WIN;
-            alert(`승리! ${state.currentGame.time}초 소요`);
           }
           return;
 

@@ -11,7 +11,7 @@ export const StyledButton = styled.button<ButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
+  border: 2px solid white;
   width: ${(props) => `${props.width}px`};
   height: ${(props) => `${props.height}px`};
   background-color: ${(props) => props.bgColor};
