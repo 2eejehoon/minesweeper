@@ -17,7 +17,7 @@ function DifficultySetting() {
     []
   );
   const handleMasterClick = useCallback(
-    () => dispatch(setTable(DIFFICULTY.MASTER)),
+    () => dispatch(setTable(DIFFICULTY.EXPERT)),
     []
   );
 
