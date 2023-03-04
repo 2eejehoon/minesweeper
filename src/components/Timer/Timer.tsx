@@ -23,10 +23,14 @@ function Timer() {
   }, [running]);
 
   useEffect(() => {
-    if (state !== STATE.PLAY) {
+    if (state === STATE.PLAY) {
+      setRunning(true);
+    } else if (state === STATE.READY) {
       setRunning(false);
       setTime(0);
-    } else setRunning(true);
+    } else if (state === STATE.WIN || state === STATE.LOSE) {
+      setRunning(false);
+    }
   }, [state]);
 
   return (
