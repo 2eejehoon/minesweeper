@@ -32,11 +32,9 @@ function Timer() {
   return (
     <Wrapper>
       <StyledSpan>
-        {("0" + Math.floor((time / 60000) % 60)).slice(-2)}
-      </StyledSpan>
-      <StyledSpan>:</StyledSpan>
-      <StyledSpan>
-        {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
+        {`${("0" + Math.floor((time / 60000) % 60)).slice(-2)}:${(
+          "0" + Math.floor((time / 1000) % 60)
+        ).slice(-2)}`}
       </StyledSpan>
     </Wrapper>
   );
