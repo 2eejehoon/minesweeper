@@ -52,8 +52,9 @@ export const mineSlice = createSlice({
       const { row, col } = action.payload;
       const openedCell = openAroundCell(row, col, state.table);
       state.currentGame.cellLeft -= openedCell;
-      if (state.currentGame.cellLeft === 0 && state.currentGame.mineLeft > 0)
+      if (state.currentGame.cellLeft === 0 && state.currentGame.mineLeft > 0) {
         state.state = STATE.LOSE;
+      }
     },
 
     endGame(state, action: PayloadAction<{ row: number; col: number }>) {
@@ -84,7 +85,12 @@ export const mineSlice = createSlice({
           state.table[row][col] = CODE.FLAG;
           state.currentGame.flag++;
           state.currentGame.cellLeft--;
-          if (state.currentGame.cellLeft === 0) state.state = STATE.LOSE;
+          if (
+            state.currentGame.cellLeft === 0 &&
+            state.currentGame.mineLeft > 0
+          ) {
+            state.state = STATE.LOSE;
+          }
           return;
 
         case CODE.FLAG: // 깃발, 지뢰 X -> 물음표, 지뢰 X
@@ -112,7 +118,10 @@ export const mineSlice = createSlice({
           state.table[row][col] = CODE.FLAG_MINE;
           state.currentGame.mineLeft--;
           state.currentGame.cellLeft--;
-          if (state.currentGame.mineLeft === 0) state.state = STATE.WIN;
+          if (state.currentGame.mineLeft === 0) {
+            state.state = STATE.WIN;
+            alert(`승리! ${state.currentGame.time}초 소요`);
+          }
           return;
 
         default:

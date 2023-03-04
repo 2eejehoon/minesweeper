@@ -27,6 +27,8 @@ export const DIFFICULTY = {
 export const BG_COLOR = {
   OPENED: "tomato",
   UNOPENED: "gray",
+  FLAG: "yellow",
+  QUESTION: "lime",
   MINE: "pink",
   CLICKED: "red",
 } as const;

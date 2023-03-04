@@ -150,12 +150,16 @@ export function getBgColor(code: number) {
 
   switch (code) {
     case CODE.UNOPENED:
-    case CODE.FLAG:
-    case CODE.QUESTION:
-    case CODE.FLAG_MINE:
-    case CODE.QUESTION_MINE:
     case CODE.UNOPENED_MINE:
       return BG_COLOR.UNOPENED;
+
+    case CODE.FLAG:
+    case CODE.FLAG_MINE:
+      return BG_COLOR.FLAG;
+
+    case CODE.QUESTION:
+    case CODE.QUESTION_MINE:
+      return BG_COLOR.QUESTION;
 
     case CODE.OPENED:
       return BG_COLOR.OPENED;
