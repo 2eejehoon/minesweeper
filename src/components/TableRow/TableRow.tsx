@@ -1,4 +1,4 @@
-import Cell from "../TableCell/TableCell";
+import TableCell from "../TableCell/TableCell";
 import { memo } from "react";
 import { useAppSelector } from "../../store/index";
 import { StyledTableRow } from "./TableRowStyle";
@@ -15,7 +15,7 @@ function TableRow({ row }: TableRowProps) {
       {Array(width)
         .fill(0)
         .map((_, i) => (
-          <Cell key={row + i} row={row} col={Number(i)} />
+          <TableCell key={row + i} row={row} col={Number(i)} />
         ))}
     </StyledTableRow>
   );

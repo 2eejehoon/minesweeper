@@ -21,7 +21,7 @@ export const STATE = {
 export const DIFFICULTY = {
   BEGINNER: { height: 8, width: 8, mine: 8 },
   INTERMEDIATE: { height: 16, width: 16, mine: 32 },
-  MASTER: { height: 16, width: 32, mine: 64 },
+  EXPERT: { height: 16, width: 32, mine: 64 },
 } as const;
 
 export const BG_COLOR = {
