@@ -1,24 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { plantMine, openAroundCell, createTable } from "../lib/mine";
-import { CODE, STATUS } from "../contant";
+import { CODE, STATE } from "../contant";
 
 export interface mineState {
   table: number[][];
-  status: "WIN" | "LOSE" | "PLAY" | "READY";
+  state: "WIN" | "LOSE" | "PLAY" | "READY";
   mine: number;
   flag: number;
   time: number;
-  currentTable: { row: number; col: number; mine: number };
+  currentTable: { height: number; width: number; mine: number };
 }
 
 const initialState: mineState = {
   table: createTable(8, 8),
-  status: STATUS.READY,
+  state: STATE.READY,
   time: 0,
   mine: 16,
   flag: 0,
-  currentTable: { row: 8, col: 8, mine: 16 },
+  currentTable: { height: 8, width: 8, mine: 16 },
 };
 
 export const mineSlice = createSlice({
@@ -27,21 +27,21 @@ export const mineSlice = createSlice({
   reducers: {
     setTable(
       state,
-      action: PayloadAction<{ row: number; col: number; mine: number }>
+      action: PayloadAction<{ height: number; width: number; mine: number }>
     ) {
-      const { row, col, mine } = action.payload;
-      state.table = createTable(row, col);
-      state.status = STATUS.READY;
+      const { height, width, mine } = action.payload;
+      state.table = createTable(height, width);
+      state.state = STATE.READY;
       state.mine = mine;
       state.flag = 0;
       state.time = 0;
-      state.currentTable = { row, col, mine };
+      state.currentTable = { height, width, mine };
     },
 
     firstClick(state, action: PayloadAction<{ row: number; col: number }>) {
       const { row, col } = action.payload;
       plantMine(row, col, state.currentTable, state.table);
-      state.status = STATUS.PLAY;
+      state.state = STATE.PLAY;
     },
 
     openCell(state, action: PayloadAction<{ row: number; col: number }>) {
@@ -63,7 +63,7 @@ export const mineSlice = createSlice({
         }
       }
       state.table[row][col] = CODE.CLICKED_MINE; // 닫힌 지뢰 -> 클릭한 지뢰
-      state.status = STATUS.LOSE;
+      state.state = STATE.LOSE;
     },
 
     updateCell(

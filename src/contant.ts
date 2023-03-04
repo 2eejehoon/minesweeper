@@ -11,7 +11,7 @@ export const CODE = {
   REMOVED_MINE: -9, // 제거한 지뢰
 } as const;
 
-export const STATUS = {
+export const STATE = {
   WIN: "WIN",
   LOSE: "LOSE",
   PLAY: "PLAY",

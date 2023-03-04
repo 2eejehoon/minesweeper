@@ -6,9 +6,9 @@ import Button from "../common/Button/Button";
 
 function DifficultySetting() {
   const dispatch = useAppDispatch();
-  const beginnerAction = { row: 8, col: 8, mine: 16 };
-  const intermediateAction = { row: 16, col: 16, mine: 64 };
-  const masterAction = { row: 16, col: 32, mine: 128 };
+  const beginnerAction = { height: 8, width: 8, mine: 16 };
+  const intermediateAction = { height: 16, width: 16, mine: 64 };
+  const masterAction = { height: 16, width: 32, mine: 128 };
 
   const handleBeginnerClick = useCallback(
     () => dispatch(setTable(beginnerAction)),

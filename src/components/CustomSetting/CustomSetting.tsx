@@ -8,39 +8,39 @@ import Button from "../common/Button/Button";
 
 function CustomSetting() {
   const dispatch = useAppDispatch();
-  const [row, handleRowChange] = useInput(8);
-  const [col, handleColChange] = useInput(8);
+  const [height, handleHeightChange] = useInput(8);
+  const [width, handleWidthChange] = useInput(8);
   const [mine, handleMineChange] = useInput(16);
 
   const handleClick = useCallback(
-    () => dispatch(setTable({ row, col, mine })),
-    [row, col, mine]
+    () => dispatch(setTable({ height, width, mine })),
+    [height, width, mine]
   );
 
   return (
     <Wrapper>
       <Input
-        id="행"
-        text="행"
+        id="높이"
+        text="높이"
         type="number"
         min={1}
-        value={row}
-        onChange={handleRowChange}
+        value={height}
+        onChange={handleHeightChange}
       />
       <Input
-        id="열"
-        text="열"
+        id="넓이"
+        text="넓이"
         type="number"
         min={1}
-        value={col}
-        onChange={handleColChange}
+        value={width}
+        onChange={handleWidthChange}
       />
       <Input
         id="지뢰"
         text="지뢰"
         type="number"
         min={1}
-        max={row * col}
+        max={height * width}
         value={mine}
         onChange={handleMineChange}
       />
