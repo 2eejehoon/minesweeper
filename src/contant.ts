@@ -12,10 +12,16 @@ export const CODE = {
 } as const;
 
 export const STATE = {
-  WIN: "WIN",
-  LOSE: "LOSE",
-  PLAY: "PLAY",
-  READY: "READY",
+  WIN: "WIN", // 승리
+  LOSE: "LOSE", // 패배
+  PLAY: "PLAY", // 게임중
+  READY: "READY", // 게임 시작 전
+} as const;
+
+export const DIFFICULTY = {
+  BEGINNER: { height: 8, width: 8, mine: 8 },
+  INTERMEDIATE: { height: 16, width: 16, mine: 32 },
+  MASTER: { height: 16, width: 32, mine: 64 },
 } as const;
 
 export const BG_COLOR = {

@@ -6,19 +6,20 @@ import { CODE, STATE } from "../contant";
 export interface mineState {
   table: number[][];
   state: "WIN" | "LOSE" | "PLAY" | "READY";
-  mine: number;
-  flag: number;
-  time: number;
+  currentGame: {
+    flag: number;
+    time: number;
+    mineLeft: number;
+    cellLeft: number;
+  };
   currentTable: { height: number; width: number; mine: number };
 }
 
 const initialState: mineState = {
   table: createTable(8, 8),
   state: STATE.READY,
-  time: 0,
-  mine: 16,
-  flag: 0,
-  currentTable: { height: 8, width: 8, mine: 16 },
+  currentGame: { flag: 0, time: 0, mineLeft: 8, cellLeft: 64 },
+  currentTable: { height: 8, width: 8, mine: 8 },
 };
 
 export const mineSlice = createSlice({
@@ -32,9 +33,12 @@ export const mineSlice = createSlice({
       const { height, width, mine } = action.payload;
       state.table = createTable(height, width);
       state.state = STATE.READY;
-      state.mine = mine;
-      state.flag = 0;
-      state.time = 0;
+      state.currentGame = {
+        flag: 0,
+        time: 0,
+        mineLeft: mine,
+        cellLeft: height * width,
+      };
       state.currentTable = { height, width, mine };
     },
 
@@ -46,7 +50,10 @@ export const mineSlice = createSlice({
 
     openCell(state, action: PayloadAction<{ row: number; col: number }>) {
       const { row, col } = action.payload;
-      openAroundCell(row, col, state.table);
+      const openedCell = openAroundCell(row, col, state.table);
+      state.currentGame.cellLeft -= openedCell;
+      if (state.currentGame.cellLeft === 0 && state.currentGame.mineLeft > 0)
+        state.state = STATE.LOSE;
     },
 
     endGame(state, action: PayloadAction<{ row: number; col: number }>) {
@@ -55,14 +62,14 @@ export const mineSlice = createSlice({
       for (let i = 0; i < state.table.length; i++) {
         for (let j = 0; j < state.table[0].length; j++) {
           if (state.table[i][j] === CODE.UNOPENED_MINE) {
-            state.table[i][j] = CODE.OPENED_MINE; // 모든 cell을 확인하면서 닫힌 지뢰 -> 열린 지뢰
+            state.table[i][j] = CODE.OPENED_MINE; // 닫힌 지뢰 -> 열린 지뢰
           }
           if (state.table[i][j] === CODE.FLAG_MINE) {
-            state.table[i][j] = CODE.REMOVED_MINE;
+            state.table[i][j] = CODE.REMOVED_MINE; // 깃발 꽂힌 지뢰 -> 제거된 지뢰
           }
         }
       }
-      state.table[row][col] = CODE.CLICKED_MINE; // 닫힌 지뢰 -> 클릭한 지뢰
+      state.table[row][col] = CODE.CLICKED_MINE; // 열린 지뢰 -> 클릭한 지뢰
       state.state = STATE.LOSE;
     },
 
@@ -75,26 +82,37 @@ export const mineSlice = createSlice({
       switch (code) {
         case CODE.UNOPENED: // 닫힘, 지뢰 X -> 깃발, 지뢰 X
           state.table[row][col] = CODE.FLAG;
+          state.currentGame.flag++;
+          state.currentGame.cellLeft--;
+          if (state.currentGame.cellLeft === 0) state.state = STATE.LOSE;
           return;
 
         case CODE.FLAG: // 깃발, 지뢰 X -> 물음표, 지뢰 X
           state.table[row][col] = CODE.QUESTION;
+          state.currentGame.flag--;
           return;
 
         case CODE.QUESTION: // 물음표, 지뢰 X -> 닫힘, 지뢰 X
           state.table[row][col] = CODE.UNOPENED;
+          state.currentGame.cellLeft++;
           return;
 
         case CODE.FLAG_MINE: // 깃발, 지뢰 O -> 물음표, 지뢰 O
           state.table[row][col] = CODE.QUESTION_MINE;
+          state.currentGame.flag--;
+          state.currentGame.mineLeft++;
           return;
 
         case CODE.QUESTION_MINE: // 물음표, 지뢰 O -> 닫힘, 지뢰 O
           state.table[row][col] = CODE.UNOPENED_MINE;
+          state.currentGame.cellLeft++;
           return;
 
         case CODE.UNOPENED_MINE: // 닫힘, 지뢰 O -> 깃발, 지뢰 O
           state.table[row][col] = CODE.FLAG_MINE;
+          state.currentGame.mineLeft--;
+          state.currentGame.cellLeft--;
+          if (state.currentGame.mineLeft === 0) state.state = STATE.WIN;
           return;
 
         default:

@@ -1,8 +1,8 @@
 import { ReactComponent as Smile } from "../../assets/smile.svg";
 import { ReactComponent as Sad } from "../../assets/sad.svg";
 import { ReactComponent as NoEmotion } from "../../assets/noemotion.svg";
+import { STATE } from "../../contant";
 import { memo, useCallback } from "react";
-import { STATUS } from "../../contant";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { Wrapper } from "./DisplayStyle";
 import Button from "../common/Button/Button";
@@ -10,7 +10,7 @@ import { setTable } from "../../store/mineSlice";
 
 function Display() {
   const dispatch = useAppDispatch();
-  const { status, currentTable } = useAppSelector((state) => state.mine);
+  const { state, currentTable } = useAppSelector((state) => state.mine);
 
   const handleClick = useCallback(
     () => dispatch(setTable(currentTable)),
@@ -27,9 +27,9 @@ function Display() {
         color={"black"}
         onClick={handleClick}
       >
-        {status === STATUS.WIN && <Smile width={35} height={35} />}
-        {status === STATUS.LOSE && <Sad width={40} height={40} />}
-        {(status === STATUS.PLAY || status === STATUS.READY) && (
+        {state === STATE.WIN && <Smile width={35} height={35} />}
+        {state === STATE.LOSE && <Sad width={40} height={40} />}
+        {(state === STATE.PLAY || state === STATE.READY) && (
           <NoEmotion width={35} height={35} />
         )}
       </Button>

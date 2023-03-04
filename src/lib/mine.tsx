@@ -51,7 +51,8 @@ export function openAroundCell(
   row: number,
   col: number,
   table: number[][]
-): void {
+): number {
+  let open = 0;
   const around = [
     [-1, -1],
     [-1, 0],
@@ -87,6 +88,7 @@ export function openAroundCell(
     if (table[row][col] !== CODE.UNOPENED) {
       return;
     }
+    open++;
 
     // 닫힌 cell을 열고 주변 지뢰 갯수를 입력
     table[row][col] = countMine(row, col);
@@ -108,6 +110,8 @@ export function openAroundCell(
   }
 
   DFS(row, col);
+
+  return open;
 }
 
 // cell의 code 별로 보여주는 값을 받아오는 함수

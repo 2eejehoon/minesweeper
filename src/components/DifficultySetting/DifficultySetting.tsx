@@ -3,23 +3,21 @@ import { Wrapper } from "./DifficultySettingStyle";
 import { useAppDispatch } from "../../store";
 import { setTable } from "../../store/mineSlice";
 import Button from "../common/Button/Button";
+import { DIFFICULTY } from "../../contant";
 
 function DifficultySetting() {
   const dispatch = useAppDispatch();
-  const beginnerAction = { height: 8, width: 8, mine: 16 };
-  const intermediateAction = { height: 16, width: 16, mine: 64 };
-  const masterAction = { height: 16, width: 32, mine: 128 };
 
   const handleBeginnerClick = useCallback(
-    () => dispatch(setTable(beginnerAction)),
+    () => dispatch(setTable(DIFFICULTY.BEGINNER)),
     []
   );
   const handleIntermediateClick = useCallback(
-    () => dispatch(setTable(intermediateAction)),
+    () => dispatch(setTable(DIFFICULTY.INTERMEDIATE)),
     []
   );
   const handleMasterClick = useCallback(
-    () => dispatch(setTable(masterAction)),
+    () => dispatch(setTable(DIFFICULTY.MASTER)),
     []
   );
 

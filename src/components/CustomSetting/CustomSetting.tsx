@@ -10,7 +10,7 @@ function CustomSetting() {
   const dispatch = useAppDispatch();
   const [height, handleHeightChange] = useInput(8);
   const [width, handleWidthChange] = useInput(8);
-  const [mine, handleMineChange] = useInput(16);
+  const [mine, handleMineChange] = useInput(8);
 
   const handleClick = useCallback(
     () => dispatch(setTable({ height, width, mine })),

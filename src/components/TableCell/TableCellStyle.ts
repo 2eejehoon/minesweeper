@@ -11,10 +11,10 @@ export const StyledCell = styled.td`
 
 export const StyledButton = styled.button<CellButtonProps>`
   color: ${(props) => props.color};
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
   display: flex;
   margin: 0;
   padding: 0;
