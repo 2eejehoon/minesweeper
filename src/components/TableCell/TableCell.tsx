@@ -25,7 +25,7 @@ function TableCell({ row, col }: TableCellProps) {
     if (state === STATE.READY) dispatch(firstClick({ row, col })); // 첫 클릭 시 클릭한 cell 제외하고 지뢰 심기
     if (code === CODE.UNOPENED) dispatch(openCell({ row, col })); // 닫힘, 지뢰 X -> cell 열기
     if (code === CODE.UNOPENED_MINE) dispatch(endGame({ row, col })); // 닫힘, 지뢰 O -> 게임 오버
-  }, [code, state]);
+  }, [code, state, row, col]);
 
   const handleRightClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
@@ -34,7 +34,7 @@ function TableCell({ row, col }: TableCellProps) {
       if (state === STATE.READY) dispatch(firstClick({ row, col })); // 첫 클릭 시 클릭한 cell 제외하고 지뢰 심기
       if (code !== CODE.OPENED) dispatch(updateCell({ row, col, code })); // 열린 cell 아니라면  닫힘 -> 깃발 -> 물음표 -> 닫힘 순서로 해당 cell의 상태 변경
     },
-    [code, state]
+    [code, state, row, col]
   );
 
   return (
