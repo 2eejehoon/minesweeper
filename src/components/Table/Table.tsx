@@ -12,7 +12,7 @@ function Table() {
         {Array(table.length)
           .fill(0)
           .map((_, i) => (
-            <TableRow row={Number(i)} />
+            <TableRow key={i} row={Number(i)} />
           ))}
       </tbody>
     </StyledTable>

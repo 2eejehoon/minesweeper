@@ -28,7 +28,7 @@ export const BG_COLOR = {
 export const COLOR = {
   ONE: "blue",
   TWO: "green",
-  THREE: "red",
+  THREE: "purple",
   FOUR: "navy",
   FIVE: "brown",
   SIX: "pink",

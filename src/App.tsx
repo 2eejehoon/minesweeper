@@ -1,5 +1,5 @@
 import Setting from "./components/Setting/Setting";
-import Display from "./components/common/Display/Display";
+import Display from "./components/Display/Display";
 import Table from "./components/Table/Table";
 import GlobalStyle from "./GlobalStyle";
 

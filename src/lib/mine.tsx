@@ -4,7 +4,7 @@ import { ReactComponent as Question } from "../../src/assets/question.svg";
 import { ReactComponent as Removed } from "../../src/assets/removed.svg";
 import { BG_COLOR, CODE, COLOR } from "../contant";
 
-export function plantMine(row: number, col: number, mine: number): number[][] {
+export function createTable(row: number, col: number): number[][] {
   // 열리지 않은 상태를 가진 cell의 2차원 배열을 생성합니다.
   const table: number[][] = [];
   for (let i = 0; i < row; i++) {
@@ -15,8 +15,39 @@ export function plantMine(row: number, col: number, mine: number): number[][] {
     }
   }
 
+  // // row * col 길이의 배열을 생성합니다.
+  // const numbers = Array(row * col)
+  //   .fill(0)
+  //   .map((_, i) => {
+  //     return Number(i);
+  //   });
+
+  // // numbers 배열에서 지뢰를 심을 랜덤 숫자를 mine 만큼 뽑아서 mines 배열에 추가합니다.
+  // const set = new Set<number>();
+  // while (mine > set.size) {
+  //   const random = Math.floor(Math.random() * numbers.length);
+  //   set.add(random);
+  // }
+  // const mines = Array.from(set);
+
+  // // mines 배열에 담긴 지뢰들을 2차원 배열에 심습니다.
+  // for (let k = 0; k < mines.length; k++) {
+  //   const ver = Math.floor(mines[k] / col);
+  //   const hor = mines[k] % col;
+  //   table[ver][hor] = CODE.UNOPENED_MINE;
+  // }
+
+  return table;
+}
+
+export function plantMine(
+  row: number,
+  col: number,
+  currentTable: { row: number; col: number; mine: number },
+  table: number[][]
+): void {
   // row * col 길이의 배열을 생성합니다.
-  const numbers = Array(row * col)
+  const numbers = Array(currentTable.row * currentTable.col)
     .fill(0)
     .map((_, i) => {
       return Number(i);
@@ -24,20 +55,18 @@ export function plantMine(row: number, col: number, mine: number): number[][] {
 
   // numbers 배열에서 지뢰를 심을 랜덤 숫자를 mine 만큼 뽑아서 mines 배열에 추가합니다.
   const set = new Set<number>();
-  while (mine > set.size) {
+  while (currentTable.mine > set.size) {
     const random = Math.floor(Math.random() * numbers.length);
-    set.add(random);
+    if (random !== row * currentTable.col + col) set.add(random);
   }
   const mines = Array.from(set);
 
   // mines 배열에 담긴 지뢰들을 2차원 배열에 심습니다.
   for (let k = 0; k < mines.length; k++) {
-    const ver = Math.floor(mines[k] / col);
-    const hor = mines[k] % col;
+    const ver = Math.floor(mines[k] / currentTable.col);
+    const hor = mines[k] % currentTable.col;
     table[ver][hor] = CODE.UNOPENED_MINE;
   }
-
-  return table;
 }
 
 export function openAroundCell(

@@ -1,12 +1,12 @@
-import { ReactComponent as Smile } from "../../../assets/smile.svg";
-import { ReactComponent as Sad } from "../../../assets/sad.svg";
-import { ReactComponent as NoEmotion } from "../../../assets/noemotion.svg";
+import { ReactComponent as Smile } from "../../assets/smile.svg";
+import { ReactComponent as Sad } from "../../assets/sad.svg";
+import { ReactComponent as NoEmotion } from "../../assets/noemotion.svg";
 import { memo, useCallback } from "react";
-import { STATUS } from "../../../contant";
-import { useAppDispatch, useAppSelector } from "../../../store";
+import { STATUS } from "../../contant";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { Wrapper } from "./DisplayStyle";
-import Button from "../Button/Button";
-import { setTable } from "../../../store/mineSlice";
+import Button from "../common/Button/Button";
+import { setTable } from "../../store/mineSlice";
 
 function Display() {
   const dispatch = useAppDispatch();

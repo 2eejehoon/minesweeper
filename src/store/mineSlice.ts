@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { openAroundCell, plantMine } from "../lib/mine";
+import { plantMine, openAroundCell, createTable } from "../lib/mine";
 import { CODE, STATUS } from "../contant";
 
 export interface mineState {
@@ -13,7 +13,7 @@ export interface mineState {
 }
 
 const initialState: mineState = {
-  table: plantMine(8, 8, 16),
+  table: createTable(8, 8),
   status: STATUS.READY,
   time: 0,
   mine: 16,
@@ -30,13 +30,18 @@ export const mineSlice = createSlice({
       action: PayloadAction<{ row: number; col: number; mine: number }>
     ) {
       const { row, col, mine } = action.payload;
-      console.log(row, col, mine);
-      state.table = plantMine(row, col, mine);
+      state.table = createTable(row, col);
       state.status = STATUS.READY;
       state.mine = mine;
       state.flag = 0;
       state.time = 0;
       state.currentTable = { row, col, mine };
+    },
+
+    firstClick(state, action: PayloadAction<{ row: number; col: number }>) {
+      const { row, col } = action.payload;
+      plantMine(row, col, state.currentTable, state.table);
+      state.status = STATUS.PLAY;
     },
 
     openCell(state, action: PayloadAction<{ row: number; col: number }>) {
@@ -57,7 +62,6 @@ export const mineSlice = createSlice({
           }
         }
       }
-
       state.table[row][col] = CODE.CLICKED_MINE; // 닫힌 지뢰 -> 클릭한 지뢰
       state.status = STATUS.LOSE;
     },
@@ -100,6 +104,7 @@ export const mineSlice = createSlice({
   },
 });
 
-export const { setTable, openCell, endGame, updateCell } = mineSlice.actions;
+export const { setTable, firstClick, openCell, endGame, updateCell } =
+  mineSlice.actions;
 
 export default mineSlice.reducer;
