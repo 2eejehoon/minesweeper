@@ -5,32 +5,15 @@ interface InputFormProps {
   id: string;
   text: string;
   type: string;
-  min: number;
-  max?: number;
   value: number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({
-  id,
-  text,
-  type,
-  min,
-  max,
-  value,
-  onChange,
-}: InputFormProps) => {
+const Input = ({ id, text, type, value, onChange }: InputFormProps) => {
   return (
     <Wrapper>
       <StyledLabel htmlFor={id}>{text}</StyledLabel>
-      <StyledInput
-        id={id}
-        type={type}
-        min={min}
-        max={max}
-        value={value}
-        onChange={onChange}
-      />
+      <StyledInput id={id} type={type} value={value} onChange={onChange} />
     </Wrapper>
   );
 };

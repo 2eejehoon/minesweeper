@@ -8,9 +8,9 @@ import Button from "../common/Button/Button";
 
 function CustomSetting() {
   const dispatch = useAppDispatch();
-  const [height, handleHeightChange] = useInput(8);
-  const [width, handleWidthChange] = useInput(8);
-  const [mine, handleMineChange] = useInput(8);
+  const [height, handleHeightChange] = useInput(8, 0, 50);
+  const [width, handleWidthChange] = useInput(8, 0, 100);
+  const [mine, handleMineChange] = useInput(8, 0, height * width - 1);
 
   const handleClick = useCallback(
     () => dispatch(setTable({ height, width, mine })),
@@ -23,7 +23,6 @@ function CustomSetting() {
         id="높이"
         text="높이"
         type="number"
-        min={1}
         value={height}
         onChange={handleHeightChange}
       />
@@ -31,7 +30,6 @@ function CustomSetting() {
         id="넓이"
         text="넓이"
         type="number"
-        min={1}
         value={width}
         onChange={handleWidthChange}
       />
@@ -39,8 +37,6 @@ function CustomSetting() {
         id="지뢰"
         text="지뢰"
         type="number"
-        min={1}
-        max={height * width}
         value={mine}
         onChange={handleMineChange}
       />

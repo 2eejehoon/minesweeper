@@ -5,12 +5,19 @@ type useInputReturnType = [
   handler: (e: ChangeEvent<HTMLInputElement>) => void
 ];
 
-function useInput(initialValue: number): useInputReturnType {
+function useInput(
+  initialValue: number,
+  min: number,
+  max: number
+): useInputReturnType {
   const [value, setValue] = useState(initialValue);
 
   const handler = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setValue(Number(e.target.value)),
-    []
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (Number(e.target.value) >= min && Number(e.target.value) <= max)
+        setValue(Number(e.target.value));
+    },
+    [min, max]
   );
 
   return [value, handler];
