@@ -1,4 +1,3 @@
-import { memo, useCallback } from "react";
 import { setTable } from "../../store/mineSlice";
 import { useAppDispatch } from "../../store";
 import { Wrapper } from "./CustomSettingStyle";
@@ -12,10 +11,7 @@ function CustomSetting() {
   const [width, handleWidthChange] = useInput(8, 0, 100);
   const [mine, handleMineChange] = useInput(8, 0, height * width - 1);
 
-  const handleClick = useCallback(
-    () => dispatch(setTable({ height, width, mine })),
-    [height, width, mine]
-  );
+  const handleClick = () => dispatch(setTable({ height, width, mine }));
 
   return (
     <Wrapper>
@@ -53,4 +49,4 @@ function CustomSetting() {
     </Wrapper>
   );
 }
-export default memo(CustomSetting);
+export default CustomSetting;

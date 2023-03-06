@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { StyledButton } from "./SettingStyle";
 import CustomSetting from "../CustomSetting/CustomSetting";
 import DifficultySetting from "../DifficultySetting/DifficultySetting";
@@ -20,4 +20,4 @@ function Setting() {
   );
 }
 
-export default memo(Setting);
+export default Setting;

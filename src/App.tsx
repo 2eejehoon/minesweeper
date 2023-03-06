@@ -7,9 +7,10 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Setting />
+      {/* 합치기 선택의 영역*/}
       <Display />
       <Table />
+      <Setting />
     </>
   );
 }

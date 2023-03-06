@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 import { Wrapper } from "./DifficultySettingStyle";
 import { useAppDispatch } from "../../store";
 import { setTable } from "../../store/mineSlice";
@@ -57,4 +57,4 @@ function DifficultySetting() {
   );
 }
 
-export default memo(DifficultySetting);
+export default DifficultySetting;

@@ -1,23 +1,16 @@
-import { ReactComponent as Smile } from "../../assets/smile.svg";
-import { ReactComponent as Sad } from "../../assets/sad.svg";
-import { ReactComponent as Normal } from "../../assets/normal.svg";
-import { STATE } from "../../contant";
 import Button from "../common/Button/Button";
 import { setTable } from "../../store/mineSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { memo, useCallback } from "react";
+import FaceEmoji from "../FaceEmoji/FaceEmoji";
 
 function Face() {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.mine.state);
-  const height = useAppSelector((state) => state.mine.currentTable.height);
-  const width = useAppSelector((state) => state.mine.currentTable.width);
-  const mine = useAppSelector((state) => state.mine.currentTable.mine);
-
-  const handleClick = useCallback(
-    () => dispatch(setTable({ height, width, mine })),
-    [height, width, mine]
+  const gameState = useAppSelector((state) => state.mine.gameState);
+  const { height, width, mine } = useAppSelector(
+    (state) => state.mine.currentTable
   );
+
+  const handleClick = () => dispatch(setTable({ height, width, mine }));
 
   return (
     <Button
@@ -28,13 +21,9 @@ function Face() {
       color={"black"}
       onClick={handleClick}
     >
-      {state === STATE.WIN && <Smile width={35} height={35} />}
-      {state === STATE.LOSE && <Sad width={35} height={35} />}
-      {(state === STATE.PLAY || state === STATE.READY) && (
-        <Normal width={35} height={35} />
-      )}
+      <FaceEmoji gameState={gameState} />
     </Button>
   );
 }
 
-export default memo(Face);
+export default Face;

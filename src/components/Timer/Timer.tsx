@@ -1,17 +1,21 @@
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Wrapper, StyledSpan } from "./TimerStyle";
 import { useAppSelector } from "../../store/index";
 import { STATE } from "../../contant";
 
 function Timer() {
   const [time, setTime] = useState(0);
-  const [running, setRunning] = useState(false);
-  const state = useAppSelector((state) => state.mine.state);
+  const [isRunning, setIsRunning] = useState(false);
+  const gameState = useAppSelector((state) => state.mine.gameState);
+
+  const min = ("0" + Math.floor((time / 60000) % 60)).slice(-2);
+  const sec = ("0" + Math.floor((time / 1000) % 60)).slice(-2);
+  const displayTime = `${min}:${sec}`;
 
   useEffect(() => {
     let interval = 0;
 
-    if (running) {
+    if (isRunning) {
       interval = window.setInterval((): void => {
         setTime((prev) => prev + 1000);
       }, 1000);
@@ -20,28 +24,43 @@ function Timer() {
     }
 
     return () => clearInterval(interval);
-  }, [running]);
+  }, [isRunning]);
 
   useEffect(() => {
-    if (state === STATE.PLAY) {
-      setRunning(true);
-    } else if (state === STATE.READY) {
-      setRunning(false);
-      setTime(0);
-    } else if (state === STATE.WIN || state === STATE.LOSE) {
-      setRunning(false);
+    switch (gameState) {
+      case STATE.PLAY:
+        setIsRunning(true);
+        return;
+
+      case STATE.READY:
+        setIsRunning(false);
+        setTime(0);
+        return;
+
+      case STATE.WIN:
+        setIsRunning(false);
+        return;
+
+      case STATE.LOSE:
+        setIsRunning(false);
+        return;
     }
-  }, [state]);
+
+    // if (gameState === STATE.PLAY) {
+    //   setIsRunning(true);
+    //   return;
+    // }
+    // if (gameState === STATE.READY) {
+    //   setTime(0);
+    // }
+    // setIsRunning(false);
+  }, [gameState]);
 
   return (
     <Wrapper>
-      <StyledSpan>
-        {`${("0" + Math.floor((time / 60000) % 60)).slice(-2)}:${(
-          "0" + Math.floor((time / 1000) % 60)
-        ).slice(-2)}`}
-      </StyledSpan>
+      <StyledSpan>{displayTime}</StyledSpan>
     </Wrapper>
   );
 }
 
-export default memo(Timer);
+export default Timer;

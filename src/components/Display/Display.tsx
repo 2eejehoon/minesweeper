@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Wrapper } from "./DisplayStyle";
 import Timer from "../Timer/Timer";
 import Face from "../Face/Face";
@@ -14,4 +13,4 @@ function Display() {
   );
 }
 
-export default memo(Display);
+export default Display;

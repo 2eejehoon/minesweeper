@@ -1,5 +1,4 @@
 import TableCell from "../TableCell/TableCell";
-import { memo } from "react";
 import { useAppSelector } from "../../store/index";
 import { StyledTableRow } from "./TableRowStyle";
 
@@ -21,4 +20,4 @@ function TableRow({ row }: TableRowProps) {
   );
 }
 
-export default memo(TableRow);
+export default TableRow;

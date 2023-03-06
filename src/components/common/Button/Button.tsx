@@ -1,4 +1,4 @@
-import { memo, MouseEventHandler, ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import { StyledButton } from "./ButtonStyle";
 
 type ButtonProps = {
@@ -34,4 +34,4 @@ function Button({
   );
 }
 
-export default memo(Button);
+export default Button;

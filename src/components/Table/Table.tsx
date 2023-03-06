@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { useAppSelector } from "../../store";
 import TableRow from "../TableRow/TableRow";
 import { StyledTable } from "./TableStyle";
@@ -19,4 +18,4 @@ function Table() {
   );
 }
 
-export default memo(Table);
+export default Table;

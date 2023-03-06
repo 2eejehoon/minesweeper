@@ -5,7 +5,7 @@ import { CODE, STATE } from "../contant";
 
 export interface mineState {
   table: number[][];
-  state: "WIN" | "LOSE" | "PLAY" | "READY";
+  gameState: "WIN" | "LOSE" | "PLAY" | "READY";
   currentGame: {
     flag: number;
     mineLeft: number;
@@ -16,7 +16,7 @@ export interface mineState {
 
 const initialState: mineState = {
   table: createTable(8, 8),
-  state: STATE.READY,
+  gameState: STATE.READY,
   currentGame: { flag: 0, mineLeft: 8, cellLeft: 64 },
   currentTable: { height: 8, width: 8, mine: 8 },
 };
@@ -31,7 +31,7 @@ export const mineSlice = createSlice({
     ) {
       const { height, width, mine } = action.payload;
       state.table = createTable(height, width);
-      state.state = STATE.READY;
+      state.gameState = STATE.READY;
       state.currentGame = {
         flag: 0,
         mineLeft: mine,
@@ -43,7 +43,7 @@ export const mineSlice = createSlice({
     firstClick(state, action: PayloadAction<{ row: number; col: number }>) {
       const { row, col } = action.payload;
       plantMine(row, col, state.currentTable, state.table);
-      state.state = STATE.PLAY;
+      state.gameState = STATE.PLAY;
     },
 
     openCell(state, action: PayloadAction<{ row: number; col: number }>) {
@@ -51,7 +51,7 @@ export const mineSlice = createSlice({
       const openedCell = openAroundCell(row, col, state.table);
       state.currentGame.cellLeft -= openedCell;
       if (state.currentGame.cellLeft === 0 && state.currentGame.mineLeft > 0) {
-        state.state = STATE.LOSE;
+        state.gameState = STATE.LOSE;
       }
     },
 
@@ -69,7 +69,7 @@ export const mineSlice = createSlice({
         }
       }
       state.table[row][col] = CODE.CLICKED_MINE; // 열린 지뢰 -> 클릭한 지뢰
-      state.state = STATE.LOSE;
+      state.gameState = STATE.LOSE;
     },
 
     updateCell(
@@ -112,7 +112,7 @@ export const mineSlice = createSlice({
           state.currentGame.mineLeft--;
           state.currentGame.cellLeft--;
           if (state.currentGame.mineLeft === 0) {
-            state.state = STATE.WIN;
+            state.gameState = STATE.WIN;
           }
           return;
 
