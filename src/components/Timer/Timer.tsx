@@ -45,15 +45,6 @@ function Timer() {
         setIsRunning(false);
         return;
     }
-
-    // if (gameState === STATE.PLAY) {
-    //   setIsRunning(true);
-    //   return;
-    // }
-    // if (gameState === STATE.READY) {
-    //   setTime(0);
-    // }
-    // setIsRunning(false);
   }, [gameState]);
 
   return (

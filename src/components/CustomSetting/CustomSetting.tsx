@@ -7,9 +7,9 @@ import Button from "../common/Button/Button";
 
 function CustomSetting() {
   const dispatch = useAppDispatch();
-  const [height, handleHeightChange] = useInput(8, 0, 50);
-  const [width, handleWidthChange] = useInput(8, 0, 100);
-  const [mine, handleMineChange] = useInput(8, 0, height * width - 1);
+  const [height, handleHeightChange] = useInput(8, 1, 50);
+  const [width, handleWidthChange] = useInput(8, 1, 100);
+  const [mine, handleMineChange] = useInput(8, 1, height * width - 1);
 
   const handleClick = () => dispatch(setTable({ height, width, mine }));
 
