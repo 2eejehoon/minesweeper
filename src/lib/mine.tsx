@@ -72,8 +72,9 @@ export function openAroundCell(
       const hor = col + around[i][1];
 
       // table 범위를 벗어난 경우 continue
-      if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length)
+      if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length) {
         continue;
+      }
 
       // 지뢰 cell인 경우 count++
       if (table[ver][hor] <= -4) {
@@ -112,6 +113,21 @@ export function openAroundCell(
   DFS(row, col);
 
   return open;
+}
+
+// 게임이 끝나면 지뢰를 오픈
+export function showMine(row: number, col: number, table: number[][]) {
+  for (let i = 0; i < table.length; i++) {
+    for (let j = 0; j < table[0].length; j++) {
+      if (table[i][j] === CODE.UNOPENED_MINE) {
+        table[i][j] = CODE.OPENED_MINE; // 닫힌 지뢰 -> 열린 지뢰
+      }
+      if (table[i][j] === CODE.FLAG_MINE) {
+        table[i][j] = CODE.REMOVED_MINE; // 깃발 꽂힌 지뢰 -> 제거된 지뢰
+      }
+    }
+  }
+  table[row][col] = CODE.CLICKED_MINE; // 열린 지뢰 -> 클릭한 지뢰
 }
 
 // cell의 code 별로 보여주는 값을 받아오는 함수

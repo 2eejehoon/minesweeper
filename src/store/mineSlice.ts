@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { plantMine, openAroundCell, createTable } from "../lib/mine";
+import { plantMine, openAroundCell, createTable, showMine } from "../lib/mine";
 import { CODE, STATE } from "../contant";
 
 export interface mineState {
@@ -57,18 +57,7 @@ export const mineSlice = createSlice({
 
     endGame(state, action: PayloadAction<{ row: number; col: number }>) {
       const { row, col } = action.payload;
-
-      for (let i = 0; i < state.table.length; i++) {
-        for (let j = 0; j < state.table[0].length; j++) {
-          if (state.table[i][j] === CODE.UNOPENED_MINE) {
-            state.table[i][j] = CODE.OPENED_MINE; // 닫힌 지뢰 -> 열린 지뢰
-          }
-          if (state.table[i][j] === CODE.FLAG_MINE) {
-            state.table[i][j] = CODE.REMOVED_MINE; // 깃발 꽂힌 지뢰 -> 제거된 지뢰
-          }
-        }
-      }
-      state.table[row][col] = CODE.CLICKED_MINE; // 열린 지뢰 -> 클릭한 지뢰
+      showMine(row, col, state.table);
       state.gameState = STATE.LOSE;
     },
 

@@ -10,7 +10,7 @@ function Timer() {
 
   const min = ("0" + Math.floor((time / 60000) % 60)).slice(-2);
   const sec = ("0" + Math.floor((time / 1000) % 60)).slice(-2);
-  const displayTime = `${min}:${sec}`;
+  const displayTime = min + ":" + sec;
 
   useEffect(() => {
     let interval = 0;
