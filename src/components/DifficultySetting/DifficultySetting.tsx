@@ -8,18 +8,12 @@ import { DIFFICULTY } from "../../contant";
 function DifficultySetting() {
   const dispatch = useAppDispatch();
 
-  const handleBeginnerClick = useCallback(
-    () => dispatch(setTable(DIFFICULTY.BEGINNER)),
-    []
-  );
+  const handleBeginnerClick = useCallback(() => dispatch(setTable(DIFFICULTY.BEGINNER)), []);
   const handleIntermediateClick = useCallback(
     () => dispatch(setTable(DIFFICULTY.INTERMEDIATE)),
     []
   );
-  const handleMasterClick = useCallback(
-    () => dispatch(setTable(DIFFICULTY.EXPERT)),
-    []
-  );
+  const handleMasterClick = useCallback(() => dispatch(setTable(DIFFICULTY.EXPERT)), []);
 
   return (
     <Wrapper>

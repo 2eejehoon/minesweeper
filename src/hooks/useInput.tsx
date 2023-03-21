@@ -1,15 +1,8 @@
 import { useState, useCallback, ChangeEvent } from "react";
 
-type useInputReturnType = [
-  value: number,
-  handler: (e: ChangeEvent<HTMLInputElement>) => void
-];
+type useInputReturnType = [value: number, handler: (e: ChangeEvent<HTMLInputElement>) => void];
 
-function useInput(
-  initialValue: number,
-  min: number,
-  max: number
-): useInputReturnType {
+function useInput(initialValue: number, min: number, max: number): useInputReturnType {
   const [value, setValue] = useState(initialValue);
 
   const handler = useCallback(

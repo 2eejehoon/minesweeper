@@ -6,10 +6,7 @@ import DifficultySetting from "../DifficultySetting/DifficultySetting";
 function Setting() {
   const [isSetting, setIsSetting] = useState(false);
 
-  const handleButtonClick = useCallback(
-    () => setIsSetting((prev) => !prev),
-    []
-  );
+  const handleButtonClick = useCallback(() => setIsSetting((prev) => !prev), []);
 
   return (
     <>

@@ -14,7 +14,7 @@ function TableRow({ row }: TableRowProps) {
       {Array(width)
         .fill(0)
         .map((_, i) => (
-          <TableCell key={row + i} row={row} col={Number(i)} />
+          <TableCell key={`${row}-${i}`} row={row} col={i} />
         ))}
     </StyledTableRow>
   );

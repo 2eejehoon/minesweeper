@@ -3,12 +3,7 @@ import { StyledCell, StyledButton } from "./TableCellStyle";
 import { getColor, getBgColor, getText } from "../../lib/mine";
 import { MouseEvent } from "react";
 import { CODE, STATE } from "../../contant";
-import {
-  firstClick,
-  openCell,
-  endGame,
-  updateCell,
-} from "../../store/mineSlice";
+import { firstClick, openCell, endGame, updateCell } from "../../store/mineSlice";
 
 type TableCellProps = {
   row: number;

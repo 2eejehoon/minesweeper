@@ -6,9 +6,7 @@ import FaceEmoji from "../FaceEmoji/FaceEmoji";
 function Face() {
   const dispatch = useAppDispatch();
   const gameState = useAppSelector((state) => state.mine.gameState);
-  const { height, width, mine } = useAppSelector(
-    (state) => state.mine.currentTable
-  );
+  const { height, width, mine } = useAppSelector((state) => state.mine.currentTable);
 
   const handleClick = () => dispatch(setTable({ height, width, mine }));
 

@@ -25,10 +25,7 @@ export const mineSlice = createSlice({
   name: "mine",
   initialState,
   reducers: {
-    setTable(
-      state,
-      action: PayloadAction<{ height: number; width: number; mine: number }>
-    ) {
+    setTable(state, action: PayloadAction<{ height: number; width: number; mine: number }>) {
       const { height, width, mine } = action.payload;
       state.table = createTable(height, width);
       state.gameState = STATE.READY;
@@ -51,7 +48,7 @@ export const mineSlice = createSlice({
       const openedCell = openAroundCell(row, col, state.table);
       state.currentGame.cellLeft -= openedCell;
       if (state.currentGame.cellLeft === 0 && state.currentGame.mineLeft > 0) {
-        state.gameState = STATE.LOSE;
+        state.gameState = STATE.LOSE; // cell을 모두 열었을 때 지뢰가 남아있으면 패배
       }
     },
 
@@ -61,10 +58,7 @@ export const mineSlice = createSlice({
       state.gameState = STATE.LOSE;
     },
 
-    updateCell(
-      state,
-      action: PayloadAction<{ row: number; col: number; code: number }>
-    ) {
+    updateCell(state, action: PayloadAction<{ row: number; col: number; code: number }>) {
       const { row, col, code } = action.payload;
 
       switch (code) {
@@ -101,7 +95,7 @@ export const mineSlice = createSlice({
           state.currentGame.mineLeft--;
           state.currentGame.cellLeft--;
           if (state.currentGame.mineLeft === 0) {
-            state.gameState = STATE.WIN;
+            state.gameState = STATE.WIN; // mine이 남아있지 않으면 승리
           }
           return;
 
@@ -112,7 +106,6 @@ export const mineSlice = createSlice({
   },
 });
 
-export const { setTable, firstClick, openCell, endGame, updateCell } =
-  mineSlice.actions;
+export const { setTable, firstClick, openCell, endGame, updateCell } = mineSlice.actions;
 
 export default mineSlice.reducer;

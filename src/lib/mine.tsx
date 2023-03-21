@@ -4,13 +4,13 @@ import { ReactComponent as Question } from "../../src/assets/question.svg";
 import { ReactComponent as Removed } from "../../src/assets/removed.svg";
 import { BG_COLOR, CODE, COLOR } from "../contant";
 
-export function createTable(row: number, col: number): number[][] {
+export function createTable(height: number, width: number): number[][] {
   // 닫힌 상태를 가진 cell의 2차원 배열을 생성합니다.
   const table: number[][] = [];
-  for (let i = 0; i < row; i++) {
+  for (let i = 0; i < height; i++) {
     const arr: number[] = [];
     table.push(arr);
-    for (let j = 0; j < col; j++) {
+    for (let j = 0; j < width; j++) {
       arr.push(CODE.UNOPENED);
     }
   }
@@ -47,11 +47,7 @@ export function plantMine(
   }
 }
 
-export function openAroundCell(
-  row: number,
-  col: number,
-  table: number[][]
-): number {
+export function openAroundCell(row: number, col: number, table: number[][]): number {
   let open = 0;
   const around = [
     [-1, -1],
@@ -64,8 +60,38 @@ export function openAroundCell(
     [1, 1],
   ];
 
+  // 클릭한 cell의 행,열 데이터를 담은 queue
+  const queue: [number, number][] = [[row, col]];
+
+  while (queue.length > 0) {
+    const currentCell = queue.shift();
+    const [row, col] = currentCell as [number, number];
+
+    // 닫힌 cell이 아닌 경우 continue
+    if (table[row][col] !== CODE.UNOPENED) continue;
+
+    // 닫힌 cell을 열고 주변 지뢰 갯수를 입력
+    open++;
+    table[row][col] = countMine(row, col);
+
+    // 주변에 지뢰가 없는 cell인 경우 주변 cell 탐색
+    if (table[row][col] === CODE.OPENED) {
+      for (let i = 0; i < 8; i++) {
+        const ver = row + around[i][0];
+        const hor = col + around[i][1];
+
+        // table 범위를 벗어나면 continue
+        if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length) continue;
+
+        // 탐색 queue에 추가
+        queue.push([ver, hor]);
+      }
+    }
+  }
+
   function countMine(row: number, col: number): number {
     let count = 0;
+
     // cell 주변 8개 cell을 탐색
     for (let i = 0; i < 8; i++) {
       const ver = row + around[i][0];
@@ -83,34 +109,6 @@ export function openAroundCell(
     }
     return count;
   }
-
-  function DFS(row: number, col: number) {
-    // 닫힌 cell이 아닌 경우 return
-    if (table[row][col] !== CODE.UNOPENED) {
-      return;
-    }
-    open++;
-
-    // 닫힌 cell을 열고 주변 지뢰 갯수를 입력
-    table[row][col] = countMine(row, col);
-
-    // 주변 지뢰의 수가 0인 경우에만 주변 cell 탐색
-    if (table[row][col] === CODE.OPENED) {
-      for (let i = 0; i < 8; i++) {
-        const ver = row + around[i][0];
-        const hor = col + around[i][1];
-
-        // table 범위를 벗어나면 continue
-        if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length)
-          continue;
-
-        // 탐색
-        DFS(ver, hor);
-      }
-    }
-  }
-
-  DFS(row, col);
 
   return open;
 }

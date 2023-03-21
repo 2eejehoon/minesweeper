@@ -11,8 +11,10 @@ function FaceEmoji({ gameState }: FaceEmojiProps) {
   switch (gameState) {
     case STATE.WIN:
       return <Smile width={35} height={35} />;
+
     case STATE.LOSE:
       return <Sad width={35} height={35} />;
+
     default:
       return <Normal width={35} height={35} />;
   }
