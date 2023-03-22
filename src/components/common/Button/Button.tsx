@@ -11,15 +11,7 @@ type ButtonProps = {
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-function Button({
-  children,
-  type,
-  width,
-  height,
-  bgColor,
-  color,
-  onClick,
-}: ButtonProps) {
+function Button({ children, type, width, height, bgColor, color, onClick }: ButtonProps) {
   return (
     <StyledButton
       type={type}

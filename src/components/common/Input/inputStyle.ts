@@ -7,15 +7,15 @@ export const Wrapper = styled.div`
 `;
 
 export const StyledInput = styled.input`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 40px;
   height: 40px;
   margin: 5px;
   padding: 5px;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
   color: black;
+  text-align: center;
   font-size: 14px;
   font-weight: 600;
   border: none;

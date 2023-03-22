@@ -7,19 +7,25 @@ import Button from "../common/Button/Button";
 
 function CustomSetting() {
   const dispatch = useAppDispatch();
-  const [height, handleHeightChange] = useInput(8, 1, 100);
-  const [width, handleWidthChange] = useInput(8, 1, 100);
+  const [height, handleHeightChange] = useInput(8, 1, 200);
+  const [width, handleWidthChange] = useInput(8, 1, 200);
   const [mine, handleMineChange] = useInput(8, 1, height * width - 1);
 
   const handleClick = () => dispatch(setTable({ height, width, mine }));
 
   return (
     <Wrapper>
-      <Input id="높이" text="높이" type="number" value={height} onChange={handleHeightChange} />
-      <Input id="넓이" text="넓이" type="number" value={width} onChange={handleWidthChange} />
-      <Input id="지뢰" text="지뢰" type="number" value={mine} onChange={handleMineChange} />
+      <Input
+        id={"높이"}
+        text={"높이"}
+        type={"number"}
+        value={height}
+        onChange={handleHeightChange}
+      />
+      <Input id={"넓이"} text={"넓이"} type={"number"} value={width} onChange={handleWidthChange} />
+      <Input id={"지뢰"} text={"지뢰"} type={"number"} value={mine} onChange={handleMineChange} />
       <Button
-        type="button"
+        type={"button"}
         width={80}
         height={40}
         onClick={handleClick}

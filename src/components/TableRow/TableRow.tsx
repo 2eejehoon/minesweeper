@@ -2,9 +2,9 @@ import TableCell from "../TableCell/TableCell";
 import { useAppSelector } from "../../store/index";
 import { StyledTableRow } from "./TableRowStyle";
 
-type TableRowProps = {
+interface TableRowProps {
   row: number;
-};
+}
 
 function TableRow({ row }: TableRowProps) {
   const width = useAppSelector((state) => state.mine.table[0].length);

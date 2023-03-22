@@ -83,7 +83,7 @@ export function openAroundCell(row: number, col: number, table: number[][]): num
         // table 범위를 벗어나면 continue
         if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length) continue;
 
-        // 탐색 queue에 추가
+        // queue에 추가
         queue.push([ver, hor]);
       }
     }

@@ -5,10 +5,10 @@ import { MouseEvent } from "react";
 import { CODE, STATE } from "../../contant";
 import { firstClick, openCell, endGame, updateCell } from "../../store/mineSlice";
 
-type TableCellProps = {
+interface TableCellProps {
   row: number;
   col: number;
-};
+}
 
 function TableCell({ row, col }: TableCellProps) {
   const dispatch = useAppDispatch();

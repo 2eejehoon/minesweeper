@@ -8,17 +8,22 @@ import { DIFFICULTY } from "../../contant";
 function DifficultySetting() {
   const dispatch = useAppDispatch();
 
-  const handleBeginnerClick = useCallback(() => dispatch(setTable(DIFFICULTY.BEGINNER)), []);
-  const handleIntermediateClick = useCallback(
-    () => dispatch(setTable(DIFFICULTY.INTERMEDIATE)),
-    []
-  );
-  const handleMasterClick = useCallback(() => dispatch(setTable(DIFFICULTY.EXPERT)), []);
+  const handleBeginnerClick = useCallback(() => {
+    dispatch(setTable(DIFFICULTY.BEGINNER));
+  }, []);
+
+  const handleIntermediateClick = useCallback(() => {
+    dispatch(setTable(DIFFICULTY.INTERMEDIATE));
+  }, []);
+
+  const handleMasterClick = useCallback(() => {
+    dispatch(setTable(DIFFICULTY.EXPERT));
+  }, []);
 
   return (
     <Wrapper>
       <Button
-        type="button"
+        type={"button"}
         width={80}
         height={57}
         bgColor={"gray"}
@@ -28,7 +33,7 @@ function DifficultySetting() {
         초보
       </Button>
       <Button
-        type="button"
+        type={"button"}
         width={80}
         height={57}
         bgColor={"gray"}
@@ -38,7 +43,7 @@ function DifficultySetting() {
         중수
       </Button>
       <Button
-        type="button"
+        type={"button"}
         width={80}
         height={57}
         bgColor={"gray"}

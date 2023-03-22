@@ -12,7 +12,7 @@ function Face() {
 
   return (
     <Button
-      type="button"
+      type={"button"}
       width={50}
       height={50}
       bgColor={"gray"}
