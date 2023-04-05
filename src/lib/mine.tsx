@@ -79,7 +79,7 @@ export function openAroundCell(row: number, col: number, table: number[][]): num
     table[row][col] = countMine(row, col);
 
     // 주변에 지뢰가 없는 cell인 경우 주변 cell 탐색
-    if (table[row][col] === CODE.OPENED) {
+    if (table[row][col] !== CODE.OPENED) {
       continue;
     }
 
