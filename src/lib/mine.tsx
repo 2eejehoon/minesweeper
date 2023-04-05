@@ -35,7 +35,11 @@ export function plantMine(
   const set = new Set<number>();
   while (currentTable.mine > set.size) {
     const random = Math.floor(Math.random() * numbers.length);
-    if (random !== row * currentTable.width + col) set.add(random); // 현재 클릭한 cell이 아닐 경우에만 지뢰를 심기
+
+    // 현재 클릭한 cell이 아닐 경우에만 지뢰를 심기
+    if (random !== row * currentTable.width + col) {
+      set.add(random);
+    }
   }
   const mines = Array.from(set);
 
@@ -76,16 +80,18 @@ export function openAroundCell(row: number, col: number, table: number[][]): num
 
     // 주변에 지뢰가 없는 cell인 경우 주변 cell 탐색
     if (table[row][col] === CODE.OPENED) {
-      for (let i = 0; i < 8; i++) {
-        const ver = row + around[i][0];
-        const hor = col + around[i][1];
+      continue;
+    }
 
-        // table 범위를 벗어나면 continue
-        if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length) continue;
+    for (let i = 0; i < 8; i++) {
+      const ver = row + around[i][0];
+      const hor = col + around[i][1];
 
-        // queue에 추가
-        queue.push([ver, hor]);
-      }
+      // table 범위를 벗어나면 continue
+      if (ver < 0 || hor < 0 || ver >= table.length || col >= table[0].length) continue;
+
+      // queue에 추가
+      queue.push([ver, hor]);
     }
   }
 
@@ -117,15 +123,18 @@ export function openAroundCell(row: number, col: number, table: number[][]): num
 export function showMine(row: number, col: number, table: number[][]) {
   for (let i = 0; i < table.length; i++) {
     for (let j = 0; j < table[0].length; j++) {
+      // 닫힌 지뢰 -> 열린 지뢰
       if (table[i][j] === CODE.UNOPENED_MINE) {
-        table[i][j] = CODE.OPENED_MINE; // 닫힌 지뢰 -> 열린 지뢰
+        table[i][j] = CODE.OPENED_MINE;
       }
+      // 깃발 꽂힌 지뢰 -> 제거된 지뢰
       if (table[i][j] === CODE.FLAG_MINE) {
-        table[i][j] = CODE.REMOVED_MINE; // 깃발 꽂힌 지뢰 -> 제거된 지뢰
+        table[i][j] = CODE.REMOVED_MINE;
       }
     }
   }
-  table[row][col] = CODE.CLICKED_MINE; // 열린 지뢰 -> 클릭한 지뢰
+  // 열린 지뢰 -> 클릭한 지뢰
+  table[row][col] = CODE.CLICKED_MINE;
 }
 
 // cell의 code 별로 보여주는 값을 받아오는 함수

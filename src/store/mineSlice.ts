@@ -25,7 +25,10 @@ export const mineSlice = createSlice({
   name: "mine",
   initialState,
   reducers: {
-    setTable(state, action: PayloadAction<{ height: number; width: number; mine: number }>) {
+    setTable(
+      state,
+      action: PayloadAction<{ height: number; width: number; mine: number }>
+    ) {
       const { height, width, mine } = action.payload;
       state.table = createTable(height, width);
       state.gameState = STATE.READY;
@@ -47,8 +50,10 @@ export const mineSlice = createSlice({
       const { row, col } = action.payload;
       const openedCell = openAroundCell(row, col, state.table);
       state.currentGame.cellLeft -= openedCell;
+
+      // cell을 모두 열었을 때 지뢰가 남아있으면 패배
       if (state.currentGame.cellLeft === 0 && state.currentGame.mineLeft > 0) {
-        state.gameState = STATE.LOSE; // cell을 모두 열었을 때 지뢰가 남아있으면 패배
+        state.gameState = STATE.LOSE;
       }
     },
 
@@ -62,40 +67,53 @@ export const mineSlice = createSlice({
       const { row, col, code } = action.payload;
 
       switch (code) {
-        case CODE.UNOPENED: // 닫힘, 지뢰 X -> 깃발, 지뢰 X
+        // 닫힘, 지뢰 X -> 깃발, 지뢰 X
+        case CODE.UNOPENED:
           state.table[row][col] = CODE.FLAG;
           state.currentGame.flag++;
           state.currentGame.cellLeft--;
+
+          // cell을 모두 열었을 때 지뢰가 남아있으면 패배
+          if (state.currentGame.cellLeft === 0 && state.currentGame.mineLeft > 0) {
+            state.gameState = STATE.LOSE;
+          }
           return;
 
-        case CODE.FLAG: // 깃발, 지뢰 X -> 물음표, 지뢰 X
+        // 깃발, 지뢰 X -> 물음표, 지뢰 X
+        case CODE.FLAG:
           state.table[row][col] = CODE.QUESTION;
           state.currentGame.flag--;
           return;
 
-        case CODE.QUESTION: // 물음표, 지뢰 X -> 닫힘, 지뢰 X
+        // 물음표, 지뢰 X -> 닫힘, 지뢰 X
+        case CODE.QUESTION:
           state.table[row][col] = CODE.UNOPENED;
           state.currentGame.cellLeft++;
           return;
 
-        case CODE.FLAG_MINE: // 깃발, 지뢰 O -> 물음표, 지뢰 O
+        // 깃발, 지뢰 O -> 물음표, 지뢰 O
+        case CODE.FLAG_MINE:
           state.table[row][col] = CODE.QUESTION_MINE;
           state.currentGame.flag--;
           state.currentGame.mineLeft++;
           return;
 
-        case CODE.QUESTION_MINE: // 물음표, 지뢰 O -> 닫힘, 지뢰 O
+        // 물음표, 지뢰 O -> 닫힘, 지뢰 O
+        case CODE.QUESTION_MINE:
           state.table[row][col] = CODE.UNOPENED_MINE;
           state.currentGame.cellLeft++;
           return;
 
-        case CODE.UNOPENED_MINE: // 닫힘, 지뢰 O -> 깃발, 지뢰 O
+        // 닫힘, 지뢰 O -> 깃발, 지뢰 O
+        case CODE.UNOPENED_MINE:
           state.table[row][col] = CODE.FLAG_MINE;
           state.currentGame.flag++;
           state.currentGame.mineLeft--;
           state.currentGame.cellLeft--;
+
+          // mine이 남아있지 않으면 승리
           if (state.currentGame.mineLeft === 0) {
-            state.gameState = STATE.WIN; // mine이 남아있지 않으면 승리
+            state.gameState = STATE.WIN;
           }
           return;
 
