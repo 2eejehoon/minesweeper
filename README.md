@@ -2,13 +2,6 @@
 https://2eejehoon.github.io/
 ![스크린샷 2023-04-05 10 32 45](https://user-images.githubusercontent.com/106265483/229958535-eb4c8d09-e392-4b2e-9283-81edbf21fb04.png)
 
-## 실행방법
-
-```
-npm install
-npm run start
-```
-
 ## 스킬
 
 - React
